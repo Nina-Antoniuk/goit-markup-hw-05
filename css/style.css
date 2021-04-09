@@ -1,4 +1,4 @@
-*:root {
+:root {
   --main-text-color: #757575;
   --title-text-color: #212121;
   --light-text-color: #fff;
@@ -18,6 +18,9 @@
 
   --elements: 3;
   --gap: 30px;
+
+  --cubic: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration: 250ms;
 }
 
 body {
@@ -42,6 +45,7 @@ p {
 .link {
   color: var(--prime-text-color);
   text-decoration: none;
+  transition: color var(--duration) var(--cubic);
 }
 
 .link:hover,
@@ -50,7 +54,19 @@ p {
 }
 
 .active {
+  position: relative;
   color: var(--text-accent);
+}
+
+.active::after {
+  content: '';
+  position: absolute;
+  top: 46px;
+  display: block;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--text-accent);
 }
 
 .list {
@@ -142,6 +158,7 @@ address {
   width: 44px;
   height: 44px;
   border-radius: 50%;
+  transition: background-color var(--duration) var(--cubic);
 }
 
 .social-link:hover,
@@ -201,6 +218,7 @@ address {
 .header-contact-link .icon {
   margin-right: 10px;
   fill: currentColor;
+  transition: fill var(--duration) var(--cubic);
 }
 
 .header-contact-link:hover .icon,
@@ -254,6 +272,8 @@ address {
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
+
+  transition: background-color var(--duration) var(--cubic);
 }
 
 .hero-button:hover,
@@ -305,17 +325,40 @@ address {
   padding-top: 0;
 }
 
+.services-item {
+  position: relative;
+}
+
+.services-item p {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  padding-top: 27px;
+  padding-bottom: 27px;
+  margin-bottom: 0;
+
+  font-weight: 700;
+  line-height: 1.14;
+  text-align: center;
+  text-transform: uppercase;
+
+  color: var(--light-text-color);
+  background-color: rgba(47, 48, 58, 0.8);
+}
+
 .team-member-item {
   font-size: 16px;
   line-height: 1.18;
   text-align: center;
 }
 .team-member-item {
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
   background-color: var(--main-bg-color);
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
     0px 2px 1px rgba(0, 0, 0, 0.2);
-  border-bottom-left-radius: var(--border-radius);
-  border-bottom-right-radius: var(--border-radius);
 }
 
 .team-member-title {
@@ -338,6 +381,8 @@ address {
   width: 20px;
   height: 20px;
   fill: var(--icon-color);
+
+  transition: fill var(--duration) var(--cubic);
 }
 
 .social-link:hover .icon,
@@ -359,6 +404,8 @@ address {
 
   border: 1px solid var(--icon-color);
   border-radius: 4px;
+
+  transition: border var(--duration) var(--cubic);
 }
 
 .customers-link:hover,
@@ -368,6 +415,7 @@ address {
 
 .customers-link .icon {
   fill: var(--icon-color);
+  transition: fill var(--duration) var(--cubic);
 }
 
 .customers-link:hover .icon,
@@ -400,6 +448,8 @@ address {
   background-color: var(--secondary-bg-color);
 
   cursor: pointer;
+  transition: background-color var(--duration) var(--cubic),
+    color var(--duration) var(--cubic), box-shadow var(--duration) var(--cubic);
 }
 
 .btn:hover,
@@ -410,14 +460,51 @@ address {
     0px 2px 2px rgba(0, 0, 0, 0.12);
 }
 
-.works-item a {
+.works-item-link {
   display: block;
+  transition: box-shadow var(--duration) var(--cubic);
 }
 
-.works-item a:hover,
-.works-item a:focus {
+.works-item-link:hover,
+.works-item-link:focus {
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
     1px 4px 6px rgba(0, 0, 0, 0.16);
+  color: currentColor;
+}
+
+.image-wrapp {
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 63px 24px;
+
+  background-color: rgba(33, 149, 243, 0.9);
+  opacity: 0;
+
+  transform: translateY(100%);
+  transition: transform var(--duration) var(--cubic),
+    opacity var(--duration) var(--cubic);
+}
+
+.overlay p {
+  font-size: 18px;
+  line-height: 1.56;
+  color: var(--light-text-color);
+}
+
+.works-item-link:hover .overlay,
+.works-item-link:focus .overlay {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .works-item-title {
@@ -487,4 +574,70 @@ address {
 
 .footer-social-link .icon {
   fill: var(--light-text-color);
+}
+
+/* modal */
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 1;
+
+  transition: opacity var(--duration) var(--cubic);
+}
+
+.backdrop.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+
+  min-width: 528px;
+  min-height: 380px;
+  padding: 30px;
+
+  background-color: #fff;
+  opacity: 1;
+
+  transition: opacity var(--duration) var(--cubic),
+    transform var(--duration) var(--cubic);
+}
+
+.backdrop.is-hidden .modal {
+  position: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+}
+
+.modal-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: var(--light-text-color);
+}
+
+.modal-btn .icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  fill: #000;
 }
