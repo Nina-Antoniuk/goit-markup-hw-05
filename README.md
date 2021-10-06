@@ -1,2 +1,9 @@
-# goit-markup-hw-05
-homework 5
+# Homework 5
+Завдання виконано відповідно до ТЗ - https://github.com/goitacademy/html-css-homework/tree/master/5-animation
+
+Технології:
+ - HTML;
+ - CSS;
+
+Додатково:
+ - prittier;
